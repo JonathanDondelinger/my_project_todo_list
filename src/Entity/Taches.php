@@ -21,17 +21,17 @@ class Taches
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private ?\DateTimeImmutable $date_échéance = null;
+    private ?\DateTimeImmutable $date_echeance = null;
 
     #[ORM\Column]
-    private ?int $priorité = null;
+    private ?int $priorite = null;
 
     #[ORM\Column(type: Types::ARRAY)]
     private array $statut = [];
 
     #[ORM\ManyToOne(inversedBy: 'taches')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Users $créateur = null;
+    private ?Users $createur = null;
 
     public function getId(): ?int
     {
@@ -62,26 +62,26 @@ class Taches
         return $this;
     }
 
-    public function getDateéchéance(): ?\DateTimeImmutable
+    public function getDateecheance(): ?\DateTimeImmutable
     {
-        return $this->date_échéance;
+        return $this->date_echeance;
     }
 
-    public function setDateéchéance(\DateTimeImmutable $date_échéance): static
+    public function setDateecheance(\DateTimeImmutable $date_echeance): static
     {
-        $this->date_échéance = $date_échéance;
+        $this->date_echeance = $date_echeance;
 
         return $this;
     }
 
-    public function getPriorité(): ?int
+    public function getPriorite(): ?int
     {
-        return $this->priorité;
+        return $this->priorite;
     }
 
-    public function setPriorité(int $priorité): static
+    public function setPriorite(int $priorite): static
     {
-        $this->priorité = $priorité;
+        $this->priorite = $priorite;
 
         return $this;
     }
@@ -98,14 +98,14 @@ class Taches
         return $this;
     }
 
-    public function getCréateur(): ?Users
+    public function getCreateur(): ?Users
     {
-        return $this->créateur;
+        return $this->createur;
     }
 
-    public function setCréateur(?Users $créateur): static
+    public function setCreateur(?Users $createur): static
     {
-        $this->créateur = $créateur;
+        $this->createur = $createur;
 
         return $this;
     }

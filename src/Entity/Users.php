@@ -37,7 +37,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
 
-    #[ORM\OneToMany(mappedBy: 'créateur', targetEntity: Taches::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'createur', targetEntity: Taches::class, orphanRemoval: true)]
     private Collection $taches;
 
     public function __construct()
@@ -151,7 +151,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->taches->contains($tach)) {
             $this->taches->add($tach);
-            $tach->setCréateur($this);
+            $tach->setCreateur($this);
         }
 
         return $this;
@@ -161,11 +161,15 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->taches->removeElement($tach)) {
             // set the owning side to null (unless already changed)
-            if ($tach->getCréateur() === $this) {
-                $tach->setCréateur(null);
+            if ($tach->getCreateur() === $this) {
+                $tach->setCreateur(null);
             }
         }
 
         return $this;
+
+    }
+    public function __toString(){
+        return $this->email; // Remplacer champ par une propriété "string" de l'entité
     }
 }

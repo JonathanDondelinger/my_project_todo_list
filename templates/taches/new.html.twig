@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Taches{% endblock %}
+
+{% block body %}
+    <h1>Create new Taches</h1>
+
+    {{ include('taches/_form.html.twig') }}
+
+    <a href="{{ path('app_taches_index') }}">back to list</a>
+{% endblock %}
