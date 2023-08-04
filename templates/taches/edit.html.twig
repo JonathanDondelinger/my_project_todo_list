@@ -3,11 +3,20 @@
 {% block title %}Edit Taches{% endblock %}
 
 {% block body %}
-    <h1>Edit Taches</h1>
+    <section class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
 
-    {{ include('taches/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_taches_index') }}">back to list</a>
-
-    {{ include('taches/_delete_form.html.twig') }}
+            <h1>Edit Taches</h1>
+                <div class="">
+                    {{ include('taches/_form.html.twig', {'button_label': 'Update'}) }}
+                </div>
+                <div class="d-grid gap-3 mx-auto ">
+                <a href="{{ path('app_taches_index') }}" class=" mx-auto ">Retour à la liste</a>
+                </div>
+                {{ include('taches/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </section>
+    
 {% endblock %}

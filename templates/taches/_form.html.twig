@@ -1,4 +1,8 @@
+
+
 {{ form_start(form) }}
+<div class="d-inline ">
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <button class="btn btn-lg btn-primary btn-lg m-3">{{ button_label|default('Ok') }}</button>
+</div>
 {{ form_end(form) }}

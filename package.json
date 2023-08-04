@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "fullcalendar": "^6.1.8",
     "vite": "^4.4.8"
   },
   "devDependencies": {

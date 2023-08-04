@@ -3,17 +3,31 @@
 {% block title %}Taches index{% endblock %}
 
 {% block body %}
+<div class="container gap-3">
     <h1>Taches index</h1>
 
-    <table class="table">
+    <div class="card" style="width: 18rem;">
+        {# <img class="card-img-top" src="{{ asset('assets/img/addition-thick-symbol.png')}}" alt="plus"> #}
+        <div class="card-body">
+            <h5 class="card-title">Nouvelle Tache</h5>
+            <a href="{{ path('app_taches_new') }}" class="btn btn-primary">Ajouter</a>
+        </div>
+        
+    </div>
+
+    <table class="container table">
         <thead>
             <tr>
                 
-                <th>Titre</th>
+                <th>Title</th>
                 <th>Description</th>
-                <th>Date_echeance</th>
                 <th>Priorite</th>
                 <th>Statut</th>
+                <th>Start</th>
+                <th>End</th>
+                {# <th>Background Color</th>
+                <th>Border Color</th>
+                <th>Text Color</th> #}
                 <th>actions</th>
             </tr>
         </thead>
@@ -21,11 +35,20 @@
         {% for tach in taches %}
             <tr>
                 
-                <td>{{ tach.titre }}</td>
+                <td>{{ tach.title }}</td>
                 <td>{{ tach.description }}</td>
-                <td>{{ tach.dateecheance ? tach.dateecheance|date('Y-m-d') : '' }}</td>
-                <td>{{ tach.priorite }}</td>
-                <td>{{ tach.statut ? tach.statut|join(', ') : '' }}</td>
+                <td>
+                    {% for priority in tach.priorite %}
+                        {{ priority }}
+                        {% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{ tach.statut | join(', ') }}</td>
+                <td>{{ tach.start ? tach.start.format('Y-m-d') : '' }}</td>
+                <td>{{ tach.end ? tach.end.format('Y-m-d') : '' }}</td>
+                {# <td>{{ tach.background_color }}</td>
+                <td>{{ tach.border_color }}</td>
+                <td>{{ tach.text_color }}</td> #}
                 <td>
                     <a href="{{ path('app_taches_show', {'id': tach.id}) }}">show</a>
                     <a href="{{ path('app_taches_edit', {'id': tach.id}) }}">edit</a>
@@ -38,6 +61,6 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_taches_new') }}">Create new</a>
+</div>
+    
 {% endblock %}

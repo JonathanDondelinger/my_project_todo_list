@@ -3,9 +3,18 @@
 {% block title %}New Taches{% endblock %}
 
 {% block body %}
-    <h1>Create new Taches</h1>
+    <section class="container">
+        <div class="row m-3">
+            <div class="col-md-6 mx-auto">
 
-    {{ include('taches/_form.html.twig') }}
+                <h1>Créer une nouvelle tâche</h1>
 
-    <a href="{{ path('app_taches_index') }}">back to list</a>
+                {{ include('taches/_form.html.twig') }}
+                
+            </div>
+            <div class="d-grid m-3 mx-auto ">
+                <a href="{{ path('app_taches_index') }}" class=" mx-auto ">Retour à la liste</a>
+            </div>    
+        </div>
+    </section>
 {% endblock %}

@@ -15,37 +15,49 @@ class Taches
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $titre = null;
+    private ?string $title = null;
 
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private ?\DateTimeImmutable $date_echeance = null;
-
     #[ORM\Column]
-    private ?int $priorite = null;
+    private ?array $priorite = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $statut = [];
+    #[ORM\Column(length: 255)]
+    private ?array $statut = null;
 
     #[ORM\ManyToOne(inversedBy: 'taches')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Users $createur = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $start = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $end = null;
+
+    #[ORM\Column(length: 7)]
+    private ?string $background_color = null;
+
+    #[ORM\Column(length: 7)]
+    private ?string $border_color = null;
+
+    #[ORM\Column(length: 7)]
+    private ?string $text_color = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTitre(): ?string
+    public function getTitle(): ?string
     {
-        return $this->titre;
+        return $this->title;
     }
 
-    public function setTitre(string $titre): static
+    public function setTitle(string $title): static
     {
-        $this->titre = $titre;
+        $this->title = $title;
 
         return $this;
     }
@@ -62,31 +74,19 @@ class Taches
         return $this;
     }
 
-    public function getDateecheance(): ?\DateTimeImmutable
-    {
-        return $this->date_echeance;
-    }
-
-    public function setDateecheance(\DateTimeImmutable $date_echeance): static
-    {
-        $this->date_echeance = $date_echeance;
-
-        return $this;
-    }
-
-    public function getPriorite(): ?int
+    public function getPriorite(): ?array
     {
         return $this->priorite;
     }
 
-    public function setPriorite(int $priorite): static
+    public function setPriorite(array $priorite): static
     {
         $this->priorite = $priorite;
 
         return $this;
     }
 
-    public function getStatut(): array
+    public function getStatut(): ?array
     {
         return $this->statut;
     }
@@ -108,5 +108,69 @@ class Taches
         $this->createur = $createur;
 
         return $this;
+    }
+
+    public function getStart(): ?\DateTimeInterface
+    {
+        return $this->start;
+    }
+
+    public function setStart(\DateTimeInterface $start): static
+    {
+        $this->start = $start;
+
+        return $this;
+    }
+
+    public function getEnd(): ?\DateTimeInterface
+    {
+        return $this->end;
+    }
+
+    public function setEnd(\DateTimeInterface $end): static
+    {
+        $this->end = $end;
+
+        return $this;
+    }
+
+    public function getBackgroundColor(): ?string
+    {
+        return $this->background_color;
+    }
+
+    public function setBackgroundColor(string $background_color): static
+    {
+        $this->background_color = $background_color;
+
+        return $this;
+    }
+
+    public function getBorderColor(): ?string
+    {
+        return $this->border_color;
+    }
+
+    public function setBorderColor(string $border_color): static
+    {
+        $this->border_color = $border_color;
+
+        return $this;
+    }
+
+    public function getTextColor(): ?string
+    {
+        return $this->text_color;
+    }
+
+    public function setTextColor(string $text_color): static
+    {
+        $this->text_color = $text_color;
+
+        return $this;
+    }
+
+    public function __toString(){
+        return $this->priorite; // Remplacer champ par une propriété "string" de l'entité
     }
 }
