@@ -3,22 +3,20 @@
 {% block title %}Taches index{% endblock %}
 
 {% block body %}
-<div class="container gap-3">
-    <h1>Taches index</h1>
-
-    <div class="card" style="width: 18rem;">
-        {# <img class="card-img-top" src="{{ asset('assets/img/addition-thick-symbol.png')}}" alt="plus"> #}
-        <div class="card-body">
-            <h5 class="card-title">Nouvelle Tache</h5>
-            <a href="{{ path('app_taches_new') }}" class="btn btn-primary">Ajouter</a>
-        </div>
-        
+{% if app.user %}
+<div class="container">
+    <div class="d-flex justify-content-center mt-5 mb-5">
+        <h1>Taches index</h1>
     </div>
 
-    <table class="container table">
+    {% include "_filterData.html.twig" with {
+        form: form
+    } only %}
+
+
+    <table class="container mt-5 mb-5 table">
         <thead>
             <tr>
-                
                 <th>Title</th>
                 <th>Description</th>
                 <th>Priorite</th>
@@ -32,7 +30,9 @@
             </tr>
         </thead>
         <tbody>
+        
         {% for tach in taches %}
+            
             <tr>
                 
                 <td>{{ tach.title }}</td>
@@ -46,21 +46,37 @@
                 <td>{{ tach.statut | join(', ') }}</td>
                 <td>{{ tach.start ? tach.start.format('Y-m-d') : '' }}</td>
                 <td>{{ tach.end ? tach.end.format('Y-m-d') : '' }}</td>
-                {# <td>{{ tach.background_color }}</td>
-                <td>{{ tach.border_color }}</td>
-                <td>{{ tach.text_color }}</td> #}
+                
+
+            {% if tach.createur == app.user %}
                 <td>
-                    <a href="{{ path('app_taches_show', {'id': tach.id}) }}">show</a>
-                    <a href="{{ path('app_taches_edit', {'id': tach.id}) }}">edit</a>
+                    <a href="{{ path('app_taches_show', {'id': tach.id}) }}">Voir</a>
+                    <a href="{{ path('app_taches_edit', {'id': tach.id}) }}">Modifier</a>
                 </td>
             </tr>
+            {% endif %}
         {% else %}
             <tr>
                 <td colspan="7">no records found</td>
             </tr>
         {% endfor %}
+        
         </tbody>
     </table>
+    <section class="d-flex justify-content-center mb-5 pb-5">
+        <div class="card " style="width: 18rem;">
+            {# <img class="card-img-top" src="{{ asset('assets/img/addition-thick-symbol.png')}}" alt="plus"> #}
+            <div class="card-body d-flex row">
+                <h5 class="card-title text-center">Nouvelle Tache</h5>
+                <a href="{{ path('app_taches_new') }}" class="btn btn-primary justify-content-center
+                ">Ajouter</a>
+            </div>    
+        </div>
+    </section>
 </div>
-    
+{% else %}    
+    {% set targetUrl = path('app_index') %}
+        <p>Vous devez être connecté pour accéder à cette page. Redirection en cours...</p>
+        <meta http-equiv="refresh" content="2;url={{ targetUrl }}">
+{% endif %}
 {% endblock %}

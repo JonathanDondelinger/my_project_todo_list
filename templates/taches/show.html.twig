@@ -3,40 +3,63 @@
 {% block title %}Taches{% endblock %}
 
 {% block body %}
-    <h1>Taches</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ tach.id }}</td>
-            </tr>
-            <tr>
-                <th>Titre</th>
-                <td>{{ tach.titre }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ tach.description }}</td>
-            </tr>
-            <tr>
-                <th>Date_echeance</th>
-                <td>{{ tach.dateecheance ? tach.dateecheance|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Priorite</th>
-                <td>{{ tach.priorite }}</td>
-            </tr>
-            <tr>
-                <th>Statut</th>
-                <td>{{ tach.statut ? tach.statut|join(', ') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_taches_index') }}">back to list</a>
-
-    <a href="{{ path('app_taches_edit', {'id': tach.id}) }}">edit</a>
-
-    {{ include('taches/_delete_form.html.twig') }}
+<section class="container  ">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="d-flex justify-content-center mt-5 mb-5">
+                    <h1>Taches</h1>
+                </div>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <td>{{ tach.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Titre</th>
+                            <td>{{ tach.title }}</td>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <td>{{ tach.description }}</td>
+                        </tr>
+                        <tr>
+                            <th>Priorite</th>
+                            <td>
+                                {% for priority in tach.priorite %}
+                                        {{ priority }}
+                                        {% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Statut</th>
+                            <td>{{ tach.statut | join(', ') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Date début</th>
+                            <td>{{ tach.start ? tach.start|date('Y-m-d') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Date fin</th>
+                            <td>{{ tach.end ? tach.end|date('Y-m-d') : '' }}</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-around mt-5 mb-5">
+                    <div class="">
+                        <a href="{{ path('app_taches_edit', {'id': tach.id}) }}" class="btn btn-success btn-lg text-white">Modifie</a>
+                    </div>
+                    <div class="btn-danger btn-lg text-white">
+                        {{ include('taches/_delete_form.html.twig',{'button_label': ''}) }}
+                    </div>
+                </div>
+                <div class="d-flex  justify-content-center mb-5">
+                    <a href="{{ path('app_taches_index') }}">Retour à la liste</a>
+                </div>
+                
+            </div>
+        </div>
+</section>
 {% endblock %}

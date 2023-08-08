@@ -15,9 +15,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class TachesController extends AbstractController
 {
     #[Route('/', name: 'app_taches_index', methods: ['GET'])]
-    public function index(TachesRepository $tachesRepository): Response
-    {
+    public function index(TachesRepository $tachesRepository, Request $request): Response
+    {   
+        $filterData = new FilterData();
+        $form = $this->createForm(FilterType::class, $filterData);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            dd($filterData);
+        }
+
         return $this->render('taches/index.html.twig', [
+            'form' => $form->createView(),
             'taches' => $tachesRepository->findAll(),
         ]);
     }
