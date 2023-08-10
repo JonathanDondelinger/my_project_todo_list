@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Taches;
+use App\Model\SearchData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -45,4 +46,19 @@ class TachesRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findBySearch(SearchData $searchData)
+    {
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->where('p.statut LIKE :statut')
+            ->setParameter('statut', $searchData->q === 'termine' ? 'termine' : '%%');
+        if(!empty($searchData->q)) {
+            $queryBuilder
+                ->andWhere('p.statut LIKE :q')
+                ->setParameter('q', "%{$searchData->q}%");
+        }
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
 }

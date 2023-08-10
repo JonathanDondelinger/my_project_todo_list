@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Model\SearchData;
+use App\Form\SearchType;
 use App\Entity\Taches;
 use App\Form\TachesType;
 use App\Repository\TachesRepository;
@@ -11,24 +13,32 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 #[Route('/taches')]
 class TachesController extends AbstractController
 {
     #[Route('/', name: 'app_taches_index', methods: ['GET'])]
-    public function index(TachesRepository $tachesRepository, Request $request): Response
+    public function index(Request $request, TachesRepository $tachesRepository): Response
     {   
-        $filterData = new FilterData();
-        $form = $this->createForm(FilterType::class, $filterData);
+        $searchData = new SearchData();
+        $tach = new Taches();
+        $form = $this->createForm(SearchType::class, $searchData);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($filterData);
+            $searchData->page = $request->query->getInt('page', 1);
+            $tach = $tachesRepository->findBySearch($searchData);
+            
+            
         }
 
         return $this->render('taches/index.html.twig', [
             'form' => $form->createView(),
             'taches' => $tachesRepository->findAll(),
+            'searchResults' => $tach,
+            
         ]);
+        dd($tach);
     }
 
     #[Route('/new', name: 'app_taches_new', methods: ['GET', 'POST'])]

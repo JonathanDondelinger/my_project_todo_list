@@ -8,7 +8,10 @@
     <div class="d-flex justify-content-center mt-5 mb-5">
         <h1>Taches index</h1>
     </div>
-
+    {% include "_partials/_search_data.html.twig" with{
+        form: form
+    } only %}
+    
     <table class="container table">
         <thead>
             <tr>
@@ -25,7 +28,8 @@
             </tr>
         </thead>
         <tbody>
-        
+    
+
         {% for tach in taches %}
             
             <tr>
@@ -54,8 +58,9 @@
             <tr>
                 <td colspan="7">no records found</td>
             </tr>
-        {% endfor %}
+            
         
+        {% endfor %}
         </tbody>
     </table>
     <section class="d-flex justify-content-center mb-5 pb-5">
@@ -68,16 +73,7 @@
             </div>    
         </div>
     </section>
-    <section class="d-flex justify-content-center mb-5 pb-5">
-        <div class="card " style="width: 18rem;">
-            {# <img class="card-img-top" src="{{ asset('assets/img/addition-thick-symbol.png')}}" alt="plus"> #}
-            <div class="card-body d-flex row">
-                <h5 class="card-title text-center">Nouvelle Tache</h5>
-                <a href="{{ path('app_taches_new') }}" class="btn btn-primary justify-content-center
-                ">Ajouter</a>
-            </div>    
-        </div>
-    </section>
+   
 </div>
 {% else %}    
     {% set targetUrl = path('app_index') %}
